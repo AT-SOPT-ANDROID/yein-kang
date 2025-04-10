@@ -45,6 +45,7 @@ android {
 dependencies {
 
     implementation(project(":data"))
+    implementation(project(":domain"))
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

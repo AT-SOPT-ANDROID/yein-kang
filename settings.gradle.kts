@@ -23,3 +23,4 @@ rootProject.name = "AT SOPT ANDROID"
 include(":app")
  include(":data")
 include(":data")
+include(":domain")
