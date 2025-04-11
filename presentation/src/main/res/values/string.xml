@@ -1,0 +1,7 @@
+<resources>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="password_visibility">비밀번호 보기</string>
+    <string name="password_invisibility">비밀번호 숨기기</string>
+    <string name="login">로그인하기</string>
+</resources>
