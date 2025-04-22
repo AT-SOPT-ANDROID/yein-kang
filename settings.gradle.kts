@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "AT SOPT ANDROID"
 include(":app")
- 
+include(":data")
+include(":domain")
+include(":presentation")
