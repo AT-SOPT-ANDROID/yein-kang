@@ -71,12 +71,13 @@ fun AtSoptTextField(
         cursorBrush = SolidColor(AtSoptTheme.colors.textPrimary),
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(if (isFocused) AtSoptTheme.colors.backgroundSecondary else AtSoptTheme.colors.backgroundTertiary)
             .border(
                 width = 1.dp,
-                color = if (isFocused) AtSoptTheme.colors.dividerPrimary else Color.Transparent
+                color = if (isFocused) AtSoptTheme.colors.dividerPrimary else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
             )
+            .clip(RoundedCornerShape(8.dp))
+            .background(if (isFocused) AtSoptTheme.colors.backgroundSecondary else AtSoptTheme.colors.backgroundTertiary)
             .padding(16.dp),
         decorationBox = { innerTextField ->
             Row(
