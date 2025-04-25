@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,19 +37,25 @@ import org.sopt.at.presentation.ui.theme.AtSoptTheme
 fun SignUpRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateSignIn: (String, String) -> Unit,
-    navigateSnackBar: (Int) -> Unit,
+    navigateSignIn: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val snackBarHost = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is SignUpSideEffect.NavigateUp -> navigateUp()
-                is SignUpSideEffect.NavigateSignIn -> navigateSignIn(sideEffect.id, sideEffect.password)
-                is SignUpSideEffect.SnackBar -> navigateSnackBar(sideEffect.message)
+                is SignUpSideEffect.NavigateSignIn -> navigateSignIn()
+                is SignUpSideEffect.SnackBar -> {
+                    snackBarHost.currentSnackbarData?.dismiss()
+                    snackBarHost.showSnackbar(
+                        message = context.getString(sideEffect.message)
+                    )
+                }
             }
         }
     }

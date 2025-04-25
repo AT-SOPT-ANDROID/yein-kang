@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,21 +42,27 @@ import org.sopt.at.presentation.ui.theme.AtSoptTheme
 fun SignInRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateMy: (String, String) -> Unit,
+    navigateHome: () -> Unit,
     navigateSignUp: () -> Unit,
-    navigateSnackBar: (Int) -> Unit,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHost = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is SignInSideEffect.NavigateUp -> navigateUp()
-                is SignInSideEffect.NavigateMy -> navigateMy(sideEffect.id, sideEffect.password)
+                is SignInSideEffect.NavigateHome -> navigateHome()
                 is SignInSideEffect.NavigateSignUp -> navigateSignUp()
-                is SignInSideEffect.SnackBar -> navigateSnackBar(sideEffect.message)
+                is SignInSideEffect.SnackBar -> {
+                    snackBarHost.currentSnackbarData?.dismiss()
+                    snackBarHost.showSnackbar(
+                        message = context.getString(sideEffect.message)
+                    )
+                }
             }
         }
     }
@@ -64,7 +73,7 @@ fun SignInRoute(
         isEnabled = state.isEnabled,
         navigateUp = viewModel::navigateUp,
         navigateSignUp = viewModel::navigateSignUp,
-        navigateMy = viewModel::navigateMy,
+        navigateHome = viewModel::navigateHome,
         onIdChange = viewModel::updateId,
         onPasswordChange = viewModel::updatePassword
     )
@@ -76,7 +85,7 @@ fun SignInScreen(
     state: SignInState,
     isEnabled: Boolean,
     navigateUp: () -> Unit,
-    navigateMy: () -> Unit,
+    navigateHome: () -> Unit,
     navigateSignUp: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit
@@ -130,8 +139,9 @@ fun SignInScreen(
                 .fillMaxWidth(),
             isEnabled = isEnabled,
             onClick = {
-                navigateMy()
+                navigateHome()
             }
+
         )
 
         Spacer(modifier = Modifier.height(36.dp))
@@ -219,7 +229,7 @@ fun SignInScreenPreview() {
             isEnabled = true,
             navigateUp = {},
             navigateSignUp = {},
-            navigateMy = {},
+            navigateHome = {},
             onIdChange = {},
             onPasswordChange = {}
         )

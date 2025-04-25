@@ -10,12 +10,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sopt.at.entity.SignInEntity
+import org.sopt.at.entity.SignUpEntity
 import org.sopt.at.presentation.R
+import org.sopt.at.repository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-
+    private val userRepository: UserRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -49,6 +52,7 @@ class SignUpViewModel @Inject constructor(
     fun navigateSignIn() = viewModelScope.launch {
         val isPasswordMatched = passwordPattern.matches(_state.value.uiState.password)
         if(isPasswordMatched) {
+            saveUser()
             _sideEffect.emit(SignUpSideEffect.NavigateSignIn(_state.value.uiState.id, _state.value.uiState.password))
         }
         else {
@@ -58,6 +62,15 @@ class SignUpViewModel @Inject constructor(
 
     fun snackBar(message: Int) = viewModelScope.launch {
         _sideEffect.emit(SignUpSideEffect.SnackBar(message))
+    }
+
+    fun saveUser() = viewModelScope.launch {
+        userRepository.saveUser(
+            SignUpEntity(
+                id = _state.value.uiState.id,
+                password = _state.value.uiState.password
+            )
+        )
     }
 
     companion object {

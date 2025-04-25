@@ -10,11 +10,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sopt.at.entity.SignInEntity
+import org.sopt.at.presentation.R
+import org.sopt.at.repository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-
+    private val userRepository: UserRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
@@ -36,8 +39,15 @@ class SignInViewModel @Inject constructor(
         _sideEffect.emit(SignInSideEffect.NavigateUp)
     }
 
-    fun navigateMy() = viewModelScope.launch {
-        _sideEffect.emit(SignInSideEffect.NavigateMy(_state.value.uiState.id, _state.value.uiState.password))
+    fun navigateHome() = viewModelScope.launch {
+        val id = userRepository.getUser().id
+        val password = userRepository.getUser().password
+
+        if(id == _state.value.uiState.id && password == _state.value.uiState.password) {
+            _sideEffect.emit(SignInSideEffect.NavigateHome)
+        } else {
+            snackBar(R.string.signin_fail)
+        }
     }
 
     fun navigateSignUp() = viewModelScope.launch {
