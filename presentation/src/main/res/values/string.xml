@@ -19,4 +19,23 @@
     <string name="signup_id_snackbar">아이디 형식이 올바르지 않습니다</string>
     <string name="signup_password_snackbar">비밀번호 형식이 올바르지 않습니다</string>
     <string name="signin_fail">로그인에 실패하셨습니다</string>
+    <string name="home">HOME</string>
+    <string name="shorts">Shorts</string>
+    <string name="live">LIVE</string>
+    <string name="search">SEARCH</string>
+    <string name="history">HISTORY</string>
+    <string name="drama">드라마</string>
+    <string name="variety">예능</string>
+    <string name="movie">영화</string>
+    <string name="sport">스포츠</string>
+    <string name="animation">애니메이션</string>
+    <string name="news">뉴스</string>
+    <string name="home_live">라이브</string>
+    <string name="tving">티빙</string>
+    <string name="icon_cast">캐스트 아이콘</string>
+    <string name="profile">프로필</string>
+    <string name="home_image">홈 이미지</string>
+    <string name="rank">오늘의 티빙 TOP 20</string>
+    <string name="now">지금 방영 중인 콘텐츠</string>
+
 </resources>
