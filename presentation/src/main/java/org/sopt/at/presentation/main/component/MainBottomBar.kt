@@ -107,7 +107,7 @@ private fun MainBottomBarItem(
 
 @Preview(showBackground = true)
 @Composable
-fun MainBottomBarPreview() {
+private fun MainBottomBarPreview() {
     AtSoptAndroidTheme {
         MainBottomBar(
             isVisible = true,

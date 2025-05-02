@@ -106,7 +106,7 @@ fun AtSoptTextField(
 
 @Preview
 @Composable
-fun AtSoptTextFieldPreview() {
+private fun AtSoptTextFieldPreview() {
     AtSoptAndroidTheme {
         AtSoptTextField(
             value = "",

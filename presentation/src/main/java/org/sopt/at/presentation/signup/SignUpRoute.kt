@@ -237,7 +237,7 @@ fun PasswordScreen(
 
 @Preview
 @Composable
-fun SignUpScreenPreview() {
+private fun SignUpScreenPreview() {
     AtSoptAndroidTheme {
         SignUpScreen(
             paddingValues = PaddingValues(),

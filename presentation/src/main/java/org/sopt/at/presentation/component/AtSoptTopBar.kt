@@ -57,7 +57,7 @@ fun AtSoptTopBar(
 
 @Composable
 @Preview
-fun AtSoptTopBarPreview() {
+private fun AtSoptTopBarPreview() {
     AtSoptAndroidTheme {
         AtSoptTopBar(
             onBackButtonClick = {}

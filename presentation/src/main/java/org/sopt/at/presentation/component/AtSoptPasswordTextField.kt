@@ -57,7 +57,7 @@ fun AtSoptPasswordTextField(
 
 @Preview
 @Composable
-fun AtSoptPasswordTextFieldPreview() {
+private fun AtSoptPasswordTextFieldPreview() {
     AtSoptAndroidTheme {
         AtSoptPasswordTextField(
             value = "",

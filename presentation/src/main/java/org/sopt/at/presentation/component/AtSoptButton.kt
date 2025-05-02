@@ -57,7 +57,7 @@ fun AtSoptButton(
 
 @Preview(showBackground = true)
 @Composable
-fun AtSoptButtonPreview() {
+private fun AtSoptButtonPreview() {
     AtSoptAndroidTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
