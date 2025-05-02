@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 sealed interface Route {
 
     @Serializable
-    data object SignIn: Route
+    data object SignIn : Route
 
     @Serializable
     data object SignUp : Route
@@ -14,19 +14,19 @@ sealed interface Route {
     data object My : Route
 }
 
-sealed interface MainTabRoute: Route {
+sealed interface MainTabRoute : Route {
     @Serializable
     data object Home : MainTabRoute
 
     @Serializable
-    data object Shorts: MainTabRoute
+    data object Shorts : MainTabRoute
 
     @Serializable
-    data object Live: MainTabRoute
+    data object Live : MainTabRoute
 
     @Serializable
-    data object Search: MainTabRoute
+    data object Search : MainTabRoute
 
     @Serializable
-    data object History: MainTabRoute
+    data object History : MainTabRoute
 }

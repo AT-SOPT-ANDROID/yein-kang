@@ -29,7 +29,7 @@ fun TypeTabRow(
     containerColor: Color = AtSoptTheme.colors.backgroundPrimary,
     indicator: @Composable (List<TabPosition>) -> Unit = {},
     content: @Composable RowScope.(Int, Int) -> Unit = { _, _ -> }
-){
+) {
     val scrollState = rememberScrollState()
 
     TabRow(
@@ -38,7 +38,7 @@ fun TypeTabRow(
         containerColor = containerColor,
         indicator = indicator,
         divider = {}
-    ){
+    ) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
@@ -69,7 +69,7 @@ private fun TypeTabRowPreview() {
                     .wrapContentWidth()
                     .padding(horizontal = 8.dp)
                     .noRippleClickable(
-                        onClick = {  }
+                        onClick = { }
                     )
             )
         }

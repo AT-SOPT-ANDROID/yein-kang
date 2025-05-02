@@ -1,10 +1,7 @@
 package org.sopt.at.presentation.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.at.presentation.R
 import org.sopt.at.presentation.extension.noRippleClickable
 import org.sopt.at.presentation.ui.theme.AtSoptAndroidTheme
-import org.sopt.at.presentation.ui.theme.AtSoptTheme
 
 @Composable
 fun AtSoptPasswordTextField(

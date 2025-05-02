@@ -18,7 +18,7 @@ fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
-    
+
     MainScreenContent(
         navigator = navigator,
         snackBarHostState = snackBarHostState
@@ -34,7 +34,7 @@ private fun MainScreenContent(
     Scaffold(
         modifier = modifier
             .background(color = AtSoptTheme.colors.backgroundPrimary),
-        content = { padding -> 
+        content = { padding ->
             AtSoptNavHost(
                 navigator = navigator,
                 paddingValues = padding

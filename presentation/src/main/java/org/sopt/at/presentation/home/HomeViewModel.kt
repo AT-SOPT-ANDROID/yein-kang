@@ -25,15 +25,19 @@ class HomeViewModel @Inject constructor(
             id = userRepository.getUser().id
         )
     }
+
     fun updateSelectedTabIndex(index: Int) = _state.update {
         it.copy(selectedTabIndex = index)
     }
+
     fun updateImageList() = _state.update {
-        it.copy(imageList = listOf(
-            R.drawable.banner_img1,
-            R.drawable.banner_img2,
-            R.drawable.banner_img3,
-            R.drawable.banner_img4
-        ))
+        it.copy(
+            imageList = listOf(
+                R.drawable.banner_img1,
+                R.drawable.banner_img2,
+                R.drawable.banner_img3,
+                R.drawable.banner_img4
+            )
+        )
     }
 }

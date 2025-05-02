@@ -172,7 +172,7 @@ fun SignInTextButton(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-    ){
+    ) {
         Text(
             text = stringResource(R.string.signin_find_id),
             fontSize = 16.sp,

@@ -93,6 +93,5 @@ private fun ContentRowPreview() {
                 R.drawable.banner_img4
             )
         )
-
     }
 }

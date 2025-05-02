@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.sopt.at.presentation.main.MainTabRoute
-import org.sopt.at.presentation.main.Route
 
 fun NavController.navigateToShorts(navOptions: NavOptions) {
     navigate(

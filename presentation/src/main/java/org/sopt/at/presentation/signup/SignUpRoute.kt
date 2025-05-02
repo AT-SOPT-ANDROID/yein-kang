@@ -81,7 +81,7 @@ fun SignUpScreen(
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
 ) {
-    if(state.isIdScreen) {
+    if (state.isIdScreen) {
         IdScreen(
             paddingValues = paddingValues,
             id = state.uiState.id,
@@ -224,7 +224,7 @@ fun PasswordScreen(
             text = stringResource(R.string.next),
             backgroundColor = AtSoptTheme.colors.dividerPrimary,
             onClick = {
-                if(isEnabled) navigateSignIn()
+                if (isEnabled) navigateSignIn()
             },
             modifier = Modifier
                 .fillMaxWidth()

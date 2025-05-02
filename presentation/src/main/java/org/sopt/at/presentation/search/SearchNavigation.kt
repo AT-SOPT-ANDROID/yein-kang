@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.sopt.at.presentation.main.MainTabRoute
-import org.sopt.at.presentation.main.Route
 
 fun NavController.navigateToSearch(navOptions: NavOptions) {
     navigate(
@@ -17,7 +16,7 @@ fun NavController.navigateToSearch(navOptions: NavOptions) {
 
 fun NavGraphBuilder.searchNavGraph(
     paddingValues: PaddingValues,
-){
+) {
     composable<MainTabRoute.Search> {
         SearchRoute(
             paddingValues = paddingValues
