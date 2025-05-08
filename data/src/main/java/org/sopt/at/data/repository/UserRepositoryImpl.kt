@@ -16,8 +16,7 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override fun getUser(): SignInEntity {
         return SignInEntity(
-            id = userDataSource.id,
-            password = userDataSource.password
+            id = userDataSource.id, password = userDataSource.password
         )
     }
 

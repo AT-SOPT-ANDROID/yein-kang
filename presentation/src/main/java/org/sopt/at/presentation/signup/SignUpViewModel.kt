@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.at.entity.SignInEntity
 import org.sopt.at.entity.SignUpEntity
 import org.sopt.at.presentation.R
 import org.sopt.at.repository.UserRepository
@@ -38,24 +37,28 @@ class SignUpViewModel @Inject constructor(
 
     fun updateIdScreen() {
         val isIdMatched = idPattern.matches(_state.value.uiState.id)
-        if(isIdMatched) {
+        if (isIdMatched) {
             _state.value = _state.value.copy(isIdScreen = !_state.value.isIdScreen)
         } else {
             snackBar(R.string.signup_id_snackbar)
         }
     }
 
-    fun navigateUp()  = viewModelScope.launch {
+    fun navigateUp() = viewModelScope.launch {
         _sideEffect.emit(SignUpSideEffect.NavigateUp)
     }
 
     fun navigateSignIn() = viewModelScope.launch {
         val isPasswordMatched = passwordPattern.matches(_state.value.uiState.password)
-        if(isPasswordMatched) {
+        if (isPasswordMatched) {
             saveUser()
-            _sideEffect.emit(SignUpSideEffect.NavigateSignIn(_state.value.uiState.id, _state.value.uiState.password))
-        }
-        else {
+            _sideEffect.emit(
+                SignUpSideEffect.NavigateSignIn(
+                    _state.value.uiState.id,
+                    _state.value.uiState.password
+                )
+            )
+        } else {
             snackBar(R.string.signup_password_snackbar)
         }
     }
@@ -75,6 +78,7 @@ class SignUpViewModel @Inject constructor(
 
     companion object {
         val idPattern = "^[a-z][a-z0-9]{5,11}$".toRegex()
-        val passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[~!@#\$%^&*])[A-Za-z\\d~!@#\$%^&*]{8,15}$".toRegex()
+        val passwordPattern =
+            "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[~!@#\$%^&*])[A-Za-z\\d~!@#\$%^&*]{8,15}$".toRegex()
     }
 }

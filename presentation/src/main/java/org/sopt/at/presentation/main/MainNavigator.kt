@@ -32,14 +32,14 @@ class MainNavigator(
 
     fun navigateTab(tab: MainTabType) {
         val navOptions = navOptions {
-            popUpTo(MainTabRoute.Home){
+            popUpTo(MainTabRoute.Home) {
                 saveState = true
             }
             launchSingleTop = true
             restoreState = true
         }
 
-        when(tab){
+        when (tab) {
             MainTabType.HOME -> navController.navigateToHome(navOptions)
             MainTabType.SHORTS -> navController.navigateToShorts(navOptions)
             MainTabType.LIVE -> navController.navigateToLive(navOptions)

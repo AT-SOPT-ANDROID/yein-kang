@@ -39,10 +39,10 @@ fun AtSoptButton(
         style = TextStyle(
             fontWeight = fontWeight
         ),
-        color = if(isEnabled) AtSoptTheme.colors.textPrimary else AtSoptTheme.colors.textSecondary,
+        color = if (isEnabled) AtSoptTheme.colors.textPrimary else AtSoptTheme.colors.textSecondary,
         modifier = modifier
             .clip(RoundedCornerShape(4.dp))
-            .background(if(isEnabled) AtSoptTheme.colors.accentRed else backgroundColor)
+            .background(if (isEnabled) AtSoptTheme.colors.accentRed else backgroundColor)
             .border(
                 width = 1.dp,
                 color = borderColor,
@@ -50,14 +50,14 @@ fun AtSoptButton(
             )
             .padding(16.dp)
             .noRippleClickable(
-                onClick = { if(isEnabled) onClick() }
+                onClick = { if (isEnabled) onClick() }
             )
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AtSoptButtonPreview() {
+private fun AtSoptButtonPreview() {
     AtSoptAndroidTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

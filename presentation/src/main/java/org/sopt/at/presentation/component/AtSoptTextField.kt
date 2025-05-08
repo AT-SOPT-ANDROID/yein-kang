@@ -87,7 +87,7 @@ fun AtSoptTextField(
                 Box(
                     modifier = Modifier.weight(1f)
                 ) {
-                    if(value.isEmpty()) {
+                    if (value.isEmpty()) {
                         Text(
                             text = placeholder,
                             color = AtSoptTheme.colors.textSecondary
@@ -96,7 +96,7 @@ fun AtSoptTextField(
                     innerTextField()
                 }
 
-                if(trailingIcon != null) {
+                if (trailingIcon != null) {
                     trailingIcon()
                 }
             }
@@ -106,7 +106,7 @@ fun AtSoptTextField(
 
 @Preview
 @Composable
-fun AtSoptTextFieldPreview() {
+private fun AtSoptTextFieldPreview() {
     AtSoptAndroidTheme {
         AtSoptTextField(
             value = "",

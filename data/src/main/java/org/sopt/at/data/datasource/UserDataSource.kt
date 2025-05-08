@@ -9,16 +9,16 @@ internal class UserDataSource @Inject constructor(
 ) {
     var id: String
         get() = userSharedPreference.getString(ID, "").toString()
-        set(value) = userSharedPreference.edit{ putString(ID, value) }
+        set(value) = userSharedPreference.edit { putString(ID, value) }
 
     var password: String
         get() = userSharedPreference.getString(PASSWORD, "").toString()
-        set(value) = userSharedPreference.edit{ putString(PASSWORD, value) }
+        set(value) = userSharedPreference.edit { putString(PASSWORD, value) }
 
     fun clearUserPreference() {
         id = DEFAULT_STRING
         password = DEFAULT_STRING
-        userSharedPreference.edit{ clear() }
+        userSharedPreference.edit { clear() }
     }
 
     companion object {
@@ -27,4 +27,3 @@ internal class UserDataSource @Inject constructor(
         private const val DEFAULT_STRING = ""
     }
 }
-

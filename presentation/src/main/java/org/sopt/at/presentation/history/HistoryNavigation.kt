@@ -9,8 +9,7 @@ import org.sopt.at.presentation.main.MainTabRoute
 
 fun NavController.navigateToHistory(navOptions: NavOptions) {
     navigate(
-        route = MainTabRoute.History,
-        navOptions = navOptions
+        route = MainTabRoute.History, navOptions = navOptions
     )
 }
 

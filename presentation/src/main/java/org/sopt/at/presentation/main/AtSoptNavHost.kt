@@ -3,6 +3,7 @@ package org.sopt.at.presentation.main
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import org.sopt.at.presentation.history.historyNavGraph
@@ -17,7 +18,8 @@ import org.sopt.at.presentation.signup.signUpNavGraph
 @Composable
 fun AtSoptNavHost(
     navigator: MainNavigator,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    snackBarHostState: SnackbarHostState
 ) {
     NavHost(
         navController = navigator.navController,
@@ -28,7 +30,8 @@ fun AtSoptNavHost(
         popExitTransition = { ExitTransition.None },
     ) {
         homeNavGraph(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            navigateMy = navigator::navigateToMy
         )
         shortsNavGraph(
             paddingValues = paddingValues
@@ -50,12 +53,14 @@ fun AtSoptNavHost(
             paddingValues = paddingValues,
             navigateUp = navigator::popBackStackIfNotHome,
             navigateHome = navigator::navigateToHome,
-            navigateSignUp = navigator::navigateToSignUp
+            navigateSignUp = navigator::navigateToSignUp,
+            snackBarHostState = snackBarHostState
         )
         signUpNavGraph(
             paddingValues = paddingValues,
             navigateUp = navigator::popBackStackIfNotHome,
-            navigateSignIn = navigator::navigateToSignIn
+            navigateSignIn = navigator::navigateToSignIn,
+            snackBarHostState = snackBarHostState
         )
     }
 }

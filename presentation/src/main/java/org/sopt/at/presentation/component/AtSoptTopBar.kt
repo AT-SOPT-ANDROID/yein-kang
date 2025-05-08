@@ -5,12 +5,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,10 +31,10 @@ fun AtSoptTopBar(
 ) {
 
     Row(
-       modifier = modifier
-           .fillMaxWidth()
-           .height(48.dp)
-           .background(backgroundColor),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .background(backgroundColor),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -60,7 +57,7 @@ fun AtSoptTopBar(
 
 @Composable
 @Preview
-fun AtSoptTopBarPreview() {
+private fun AtSoptTopBarPreview() {
     AtSoptAndroidTheme {
         AtSoptTopBar(
             onBackButtonClick = {}

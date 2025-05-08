@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.at.entity.SignInEntity
 import org.sopt.at.presentation.R
 import org.sopt.at.repository.UserRepository
 import javax.inject.Inject
@@ -35,7 +34,7 @@ class SignInViewModel @Inject constructor(
         _state.value = _state.value.copy(uiState = _state.value.uiState.copy(password = password))
     }
 
-    fun navigateUp()  = viewModelScope.launch {
+    fun navigateUp() = viewModelScope.launch {
         _sideEffect.emit(SignInSideEffect.NavigateUp)
     }
 
@@ -43,7 +42,7 @@ class SignInViewModel @Inject constructor(
         val id = userRepository.getUser().id
         val password = userRepository.getUser().password
 
-        if(id == _state.value.uiState.id && password == _state.value.uiState.password) {
+        if (id == _state.value.uiState.id && password == _state.value.uiState.password) {
             _sideEffect.emit(SignInSideEffect.NavigateHome)
         } else {
             snackBar(R.string.signin_fail)

@@ -1,6 +1,7 @@
 package org.sopt.at.presentation.signup
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -17,13 +18,15 @@ fun NavController.navigateToSignUp(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.signUpNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateSignIn: () -> Unit
+    navigateSignIn: () -> Unit,
+    snackBarHostState: SnackbarHostState
 ) {
     composable<Route.SignUp> {
         SignUpRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
             navigateSignIn = navigateSignIn,
+            snackBarHostState = snackBarHostState
         )
 
     }

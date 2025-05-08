@@ -16,12 +16,14 @@ import org.sopt.at.presentation.ui.theme.AtSoptTheme
 @Composable
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
+    modifier: Modifier = Modifier
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
-    
+
     MainScreenContent(
         navigator = navigator,
-        snackBarHostState = snackBarHostState
+        snackBarHostState = snackBarHostState,
+        modifier = modifier
     )
 }
 
@@ -34,10 +36,11 @@ private fun MainScreenContent(
     Scaffold(
         modifier = modifier
             .background(color = AtSoptTheme.colors.backgroundPrimary),
-        content = { padding -> 
+        content = { padding ->
             AtSoptNavHost(
                 navigator = navigator,
-                paddingValues = padding
+                paddingValues = padding,
+                snackBarHostState = snackBarHostState
             )
         },
         bottomBar = {

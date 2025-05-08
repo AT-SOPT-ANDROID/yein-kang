@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.sopt.at.presentation.main.MainTabRoute
-import org.sopt.at.presentation.main.Route
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(
@@ -16,11 +15,13 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navigateMy: () -> Unit
 ) {
     composable<MainTabRoute.Home> {
         HomeRoute(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            navigateMy =  navigateMy
         )
     }
 }

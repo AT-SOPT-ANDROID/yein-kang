@@ -77,7 +77,7 @@ private fun MainBottomBarItem(
         modifier = modifier
             .padding(top = 12.dp, bottom = 10.dp)
             .width((LocalConfiguration.current.screenWidthDp * 0.133).dp)
-            .noRippleClickable (
+            .noRippleClickable(
                 onClick = { onTabSelected(tabType) }
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -107,7 +107,7 @@ private fun MainBottomBarItem(
 
 @Preview(showBackground = true)
 @Composable
-fun MainBottomBarPreview() {
+private fun MainBottomBarPreview() {
     AtSoptAndroidTheme {
         MainBottomBar(
             isVisible = true,

@@ -38,11 +38,11 @@ fun SignUpRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateSignIn: () -> Unit,
+    snackBarHostState: SnackbarHostState,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val snackBarHost = remember { SnackbarHostState() }
     val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -51,8 +51,8 @@ fun SignUpRoute(
                 is SignUpSideEffect.NavigateUp -> navigateUp()
                 is SignUpSideEffect.NavigateSignIn -> navigateSignIn()
                 is SignUpSideEffect.SnackBar -> {
-                    snackBarHost.currentSnackbarData?.dismiss()
-                    snackBarHost.showSnackbar(
+                    snackBarHostState.currentSnackbarData?.dismiss()
+                    snackBarHostState.showSnackbar(
                         message = context.getString(sideEffect.message)
                     )
                 }
@@ -81,7 +81,7 @@ fun SignUpScreen(
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
 ) {
-    if(state.isIdScreen) {
+    if (state.isIdScreen) {
         IdScreen(
             paddingValues = paddingValues,
             id = state.uiState.id,
@@ -224,7 +224,7 @@ fun PasswordScreen(
             text = stringResource(R.string.next),
             backgroundColor = AtSoptTheme.colors.dividerPrimary,
             onClick = {
-                if(isEnabled) navigateSignIn()
+                if (isEnabled) navigateSignIn()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -237,7 +237,7 @@ fun PasswordScreen(
 
 @Preview
 @Composable
-fun SignUpScreenPreview() {
+private fun SignUpScreenPreview() {
     AtSoptAndroidTheme {
         SignUpScreen(
             paddingValues = PaddingValues(),
