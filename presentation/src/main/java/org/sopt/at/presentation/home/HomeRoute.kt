@@ -3,7 +3,9 @@ package org.sopt.at.presentation.home
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -58,8 +60,9 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = AtSoptTheme.colors.backgroundPrimary)
-            .padding(bottom = paddingValues.calculateBottomPadding()),
-        contentPadding = PaddingValues(8.dp)
+            .padding(bottom = paddingValues
+                .calculateBottomPadding()
+            )
     ) {
         item {
             HomeTopBar(
@@ -67,6 +70,7 @@ fun HomeScreen(
 
                 }
             )
+            Spacer(Modifier.height(8.dp))
         }
 
         stickyHeader {
@@ -74,6 +78,8 @@ fun HomeScreen(
                 selectedTabIndex = state.selectedTabIndex,
                 onTabClick = onTabSelected
             )
+
+            Spacer(Modifier.height(8.dp))
         }
 
         item {
@@ -82,12 +88,14 @@ fun HomeScreen(
                     imageList = state.imageList
                 )
             }
+            Spacer(Modifier.height(8.dp))
         }
 
         item {
             RankContentRow(
                 contentList = state.imageList
             )
+            Spacer(Modifier.height(8.dp))
         }
 
         item {
