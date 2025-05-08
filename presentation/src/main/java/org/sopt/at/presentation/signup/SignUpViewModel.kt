@@ -1,8 +1,10 @@
 package org.sopt.at.presentation.signup
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,12 +14,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.at.entity.SignUpEntity
 import org.sopt.at.presentation.R
-import org.sopt.at.repository.UserRepository
+import org.sopt.at.repository.AuthRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -27,21 +29,41 @@ class SignUpViewModel @Inject constructor(
     val sideEffect: SharedFlow<SignUpSideEffect>
         get() = _sideEffect.asSharedFlow()
 
+    fun signUp() = viewModelScope.launch {
+        val signUpData = SignUpEntity(
+            loginId = _state.value.uiState.loginId,
+            password = _state.value.uiState.password,
+            nickname = _state.value.uiState.nickname
+        )
+        authRepository.signUp(signUpData).onSuccess {
+            snackBar(R.string.signup_success)
+            delay(1L)
+            navigateSignIn()
+        }.onFailure {
+            snackBarMessage(it.message.toString())
+            delay(1L)
+            navigateId()
+        }
+    }
+
     fun updateId(id: String) {
-        _state.value = _state.value.copy(uiState = _state.value.uiState.copy(id = id))
+        _state.value = _state.value.copy(uiState = _state.value.uiState.copy(loginId = id))
     }
 
     fun updatePassword(password: String) {
         _state.value = _state.value.copy(uiState = _state.value.uiState.copy(password = password))
     }
 
+    fun updateNickname(nickname: String) {
+        _state.value = _state.value.copy(uiState = _state.value.uiState.copy(nickname = nickname))
+    }
+
     fun updateIdScreen() {
-        val isIdMatched = idPattern.matches(_state.value.uiState.id)
-        if (isIdMatched) {
-            _state.value = _state.value.copy(isIdScreen = !_state.value.isIdScreen)
-        } else {
-            snackBar(R.string.signup_id_snackbar)
-        }
+        _state.value = _state.value.copy(screenType = ScreenType.PASSWORD)
+    }
+
+    fun updatePasswordScreen() {
+        _state.value = _state.value.copy(screenType = ScreenType.NICKNAME)
     }
 
     fun navigateUp() = viewModelScope.launch {
@@ -49,36 +71,18 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun navigateSignIn() = viewModelScope.launch {
-        val isPasswordMatched = passwordPattern.matches(_state.value.uiState.password)
-        if (isPasswordMatched) {
-            saveUser()
-            _sideEffect.emit(
-                SignUpSideEffect.NavigateSignIn(
-                    _state.value.uiState.id,
-                    _state.value.uiState.password
-                )
-            )
-        } else {
-            snackBar(R.string.signup_password_snackbar)
-        }
+        _sideEffect.emit(SignUpSideEffect.NavigateSignIn)
     }
 
-    fun snackBar(message: Int) = viewModelScope.launch {
+    fun navigateId() = viewModelScope.launch {
+        _state.value = _state.value.copy(screenType = ScreenType.ID)
+    }
+
+    fun snackBarMessage(message: String) = viewModelScope.launch {
+        _sideEffect.emit(SignUpSideEffect.SnackBarMessage(message))
+    }
+
+    fun snackBar(@StringRes message: Int) = viewModelScope.launch {
         _sideEffect.emit(SignUpSideEffect.SnackBar(message))
-    }
-
-    fun saveUser() = viewModelScope.launch {
-        userRepository.saveUser(
-            SignUpEntity(
-                id = _state.value.uiState.id,
-                password = _state.value.uiState.password
-            )
-        )
-    }
-
-    companion object {
-        val idPattern = "^[a-z][a-z0-9]{5,11}$".toRegex()
-        val passwordPattern =
-            "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[~!@#\$%^&*])[A-Za-z\\d~!@#\$%^&*]{8,15}$".toRegex()
     }
 }

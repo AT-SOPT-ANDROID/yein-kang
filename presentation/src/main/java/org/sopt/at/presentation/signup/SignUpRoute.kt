@@ -1,5 +1,7 @@
 package org.sopt.at.presentation.signup
 
+import android.provider.ContactsContract.CommonDataKinds.Nickname
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -50,6 +52,13 @@ fun SignUpRoute(
             when (sideEffect) {
                 is SignUpSideEffect.NavigateUp -> navigateUp()
                 is SignUpSideEffect.NavigateSignIn -> navigateSignIn()
+                is SignUpSideEffect.SnackBarMessage -> {
+                    snackBarHostState.currentSnackbarData?.dismiss()
+                    snackBarHostState.showSnackbar(
+                        message = sideEffect.message
+                    )
+                }
+
                 is SignUpSideEffect.SnackBar -> {
                     snackBarHostState.currentSnackbarData?.dismiss()
                     snackBarHostState.showSnackbar(
@@ -64,10 +73,12 @@ fun SignUpRoute(
         paddingValues = paddingValues,
         state = state,
         navigateUp = navigateUp,
-        navigateSignIn = viewModel::navigateSignIn,
+        navigateSignIn = viewModel::signUp,
         navigatePassword = viewModel::updateIdScreen,
+        navigateNickname = viewModel::updatePasswordScreen,
         onIdChange = viewModel::updateId,
-        onPasswordChange = viewModel::updatePassword
+        onPasswordChange = viewModel::updatePassword,
+        onNicknameChange = viewModel::updateNickname
     )
 }
 
@@ -78,24 +89,35 @@ fun SignUpScreen(
     navigateUp: () -> Unit,
     navigateSignIn: () -> Unit,
     navigatePassword: () -> Unit,
+    navigateNickname: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onNicknameChange: (String) -> Unit
 ) {
-    if (state.isIdScreen) {
+    if (state.screenType == ScreenType.ID) {
         IdScreen(
             paddingValues = paddingValues,
-            id = state.uiState.id,
+            id = state.uiState.loginId,
             isEnabled = state.isIdEnabled,
             onIdChange = onIdChange,
             navigateUp = navigateUp,
             navigatePassword = navigatePassword
         )
-    } else {
+    } else if (state.screenType == ScreenType.PASSWORD) {
         PasswordScreen(
             paddingValues = paddingValues,
             password = state.uiState.password,
             isEnabled = state.isPasswordEnabled,
             onPasswordChange = onPasswordChange,
+            navigateUp = navigateUp,
+            navigateNickname = navigateNickname
+        )
+    } else {
+        NicknameScreen(
+            paddingValues = paddingValues,
+            nickname = state.uiState.nickname,
+            isEnabled = state.isNicknameEnabled,
+            onNicknameChange = onNicknameChange,
             navigateUp = navigateUp,
             navigateSignIn = navigateSignIn
         )
@@ -176,7 +198,7 @@ fun PasswordScreen(
     isEnabled: Boolean,
     onPasswordChange: (String) -> Unit,
     navigateUp: () -> Unit,
-    navigateSignIn: () -> Unit
+    navigateNickname: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -224,6 +246,73 @@ fun PasswordScreen(
             text = stringResource(R.string.next),
             backgroundColor = AtSoptTheme.colors.dividerPrimary,
             onClick = {
+                if (isEnabled) navigateNickname()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            isEnabled = isEnabled,
+            borderColor = AtSoptTheme.colors.textPrimary
+        )
+    }
+}
+
+@Composable
+fun NicknameScreen(
+    paddingValues: PaddingValues,
+    nickname: String,
+    isEnabled: Boolean,
+    onNicknameChange: (String) -> Unit,
+    navigateUp: () -> Unit,
+    navigateSignIn: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AtSoptTheme.colors.backgroundPrimary)
+            .padding(paddingValues)
+    ) {
+        AtSoptTopBar(
+            onBackButtonClick = navigateUp
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = stringResource(R.string.signup_nickname),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = AtSoptTheme.colors.textPrimary,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        AtSoptTextField(
+            value = nickname,
+            onValueChange = onNicknameChange,
+            placeholder = stringResource(R.string.nickname),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.signup_nickname_descrption),
+            fontSize = 12.sp,
+            color = AtSoptTheme.colors.textSecondary,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        AtSoptButton(
+            text = stringResource(R.string.next),
+            backgroundColor = AtSoptTheme.colors.dividerPrimary,
+            onClick = {
                 if (isEnabled) navigateSignIn()
             },
             modifier = Modifier
@@ -246,7 +335,9 @@ private fun SignUpScreenPreview() {
             navigateSignIn = {},
             onIdChange = {},
             onPasswordChange = {},
-            navigatePassword = {}
+            navigatePassword = {},
+            navigateNickname = {},
+            onNicknameChange = {}
         )
     }
 }
