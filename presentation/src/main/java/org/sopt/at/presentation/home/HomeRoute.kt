@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.at.presentation.home.component.ContentRow
 import org.sopt.at.presentation.home.component.HomeTabRow
@@ -30,9 +31,11 @@ import org.sopt.at.presentation.ui.theme.AtSoptTheme
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
+    navigateMy: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
     val counter by remember { mutableIntStateOf(0) }
     val currentCounter by rememberUpdatedState(counter)
 
@@ -41,10 +44,19 @@ fun HomeRoute(
         viewModel.updateImageList()
     }
 
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is HomeSideEffect.NavigateMy -> navigateMy()
+            }
+        }
+    }
+
     HomeScreen(
         paddingValues = paddingValues,
         state = state,
-        onTabSelected = viewModel::updateSelectedTabIndex
+        onTabSelected = viewModel::updateSelectedTabIndex,
+        navigateMy = viewModel::navigateMy
     )
 }
 
@@ -54,6 +66,7 @@ fun HomeScreen(
     paddingValues: PaddingValues,
     state: HomeState,
     onTabSelected: (Int) -> Unit,
+    navigateMy: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -66,9 +79,7 @@ fun HomeScreen(
     ) {
         item {
             HomeTopBar(
-                onClickProfile = {
-
-                }
+                onClickProfile = navigateMy
             )
             Spacer(Modifier.height(8.dp))
         }
@@ -113,7 +124,8 @@ private fun HomeScreenPreview() {
         HomeScreen(
             paddingValues = PaddingValues(0.dp),
             state = HomeState(),
-            onTabSelected = {}
+            onTabSelected = {},
+            navigateMy = {}
         )
     }
 }

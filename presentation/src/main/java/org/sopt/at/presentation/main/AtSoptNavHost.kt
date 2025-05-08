@@ -30,7 +30,8 @@ fun AtSoptNavHost(
         popExitTransition = { ExitTransition.None },
     ) {
         homeNavGraph(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            navigateMy = navigator::navigateToMy
         )
         shortsNavGraph(
             paddingValues = paddingValues
