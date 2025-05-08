@@ -63,6 +63,12 @@ fun SignInRoute(
                         message = context.getString(sideEffect.message)
                     )
                 }
+                is SignInSideEffect.SnackBarMessage -> {
+                    snackBarHostState.currentSnackbarData?.dismiss()
+                    snackBarHostState.showSnackbar(
+                        message = sideEffect.message
+                    )
+                }
             }
         }
     }
@@ -73,7 +79,7 @@ fun SignInRoute(
         isEnabled = state.isEnabled,
         navigateUp = viewModel::navigateUp,
         navigateSignUp = viewModel::navigateSignUp,
-        navigateHome = viewModel::navigateHome,
+        onClickLogin= viewModel::signIn,
         onIdChange = viewModel::updateId,
         onPasswordChange = viewModel::updatePassword
     )
@@ -85,7 +91,7 @@ fun SignInScreen(
     state: SignInState,
     isEnabled: Boolean,
     navigateUp: () -> Unit,
-    navigateHome: () -> Unit,
+    onClickLogin: () -> Unit,
     navigateSignUp: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit
@@ -139,7 +145,7 @@ fun SignInScreen(
                 .fillMaxWidth(),
             isEnabled = isEnabled,
             onClick = {
-                navigateHome()
+                onClickLogin()
             }
 
         )
@@ -229,7 +235,7 @@ fun SignInScreenPreview() {
             isEnabled = true,
             navigateUp = {},
             navigateSignUp = {},
-            navigateHome = {},
+            onClickLogin = {},
             onIdChange = {},
             onPasswordChange = {}
         )
