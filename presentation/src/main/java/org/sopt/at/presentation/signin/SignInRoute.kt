@@ -44,10 +44,10 @@ fun SignInRoute(
     navigateUp: () -> Unit,
     navigateHome: () -> Unit,
     navigateSignUp: () -> Unit,
+    snackBarHostState: SnackbarHostState,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val snackBarHost = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
 
@@ -58,8 +58,8 @@ fun SignInRoute(
                 is SignInSideEffect.NavigateHome -> navigateHome()
                 is SignInSideEffect.NavigateSignUp -> navigateSignUp()
                 is SignInSideEffect.SnackBar -> {
-                    snackBarHost.currentSnackbarData?.dismiss()
-                    snackBarHost.showSnackbar(
+                    snackBarHostState.currentSnackbarData?.dismiss()
+                    snackBarHostState.showSnackbar(
                         message = context.getString(sideEffect.message)
                     )
                 }

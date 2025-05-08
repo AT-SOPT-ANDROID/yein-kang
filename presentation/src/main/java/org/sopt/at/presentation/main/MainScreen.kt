@@ -22,7 +22,7 @@ fun MainScreen(
 
     MainScreenContent(
         navigator = navigator,
-        snackBarHostState = snackBarHostState
+        snackBarHostState = snackBarHostState,
         modifier = modifier
     )
 }
@@ -39,8 +39,8 @@ private fun MainScreenContent(
         content = { padding ->
             AtSoptNavHost(
                 navigator = navigator,
-                paddingValues = padding
                 paddingValues = padding,
+                snackBarHostState = snackBarHostState
             )
         },
         bottomBar = {
