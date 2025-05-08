@@ -1,27 +1,25 @@
 package org.sopt.at.data.repository
 
-import org.sopt.at.data.datasource.UserDataSource
-import org.sopt.at.entity.SignInEntity
-import org.sopt.at.entity.SignUpEntity
+import org.sopt.at.data.datasource.UserLocalDataSource
+import org.sopt.at.entity.SignInUserEntity
 import org.sopt.at.repository.UserRepository
 import javax.inject.Inject
 
 internal class UserRepositoryImpl @Inject constructor(
-    private val userDataSource: UserDataSource
+    private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
-    override fun saveUser(signUpEntity: SignUpEntity) {
-        userDataSource.id = signUpEntity.id
-        userDataSource.password = signUpEntity.password
+    override fun saveUser(signInUserData: SignInUserEntity) {
+        userLocalDataSource.userId = signInUserData.userId
     }
 
-    override fun getUser(): SignInEntity {
-        return SignInEntity(
-            id = userDataSource.id, password = userDataSource.password
+    override fun getUser(): SignInUserEntity {
+        return SignInUserEntity(
+            userId = userLocalDataSource.userId
         )
     }
 
     override fun clearUserPreference() {
-        userDataSource.clearUserPreference()
+        userLocalDataSource.clearUserPreference()
     }
 
 }

@@ -1,10 +1,9 @@
 package org.sopt.at.repository
 
-import org.sopt.at.entity.SignInEntity
-import org.sopt.at.entity.SignUpEntity
+import org.sopt.at.entity.SignInUserEntity
 
 interface UserRepository {
-    fun saveUser(signUpEntity: SignUpEntity)
-    fun getUser(): SignInEntity
+    fun saveUser(signInUserData: SignInUserEntity)
+    fun getUser(): SignInUserEntity
     fun clearUserPreference()
 }
