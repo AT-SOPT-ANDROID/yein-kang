@@ -40,7 +40,6 @@ fun HomeRoute(
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-        viewModel.getUser()
         viewModel.updateImageList()
     }
 

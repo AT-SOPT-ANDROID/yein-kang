@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository
+
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
@@ -29,12 +29,6 @@ class HomeViewModel @Inject constructor(
 
     fun navigateMy() = viewModelScope.launch {
         _sideEffect.emit(HomeSideEffect.NavigateMy)
-    }
-
-    fun getUser() = viewModelScope.launch {
-        _state.value = _state.value.copy(
-            id = userRepository.getUser().id
-        )
     }
 
     fun updateSelectedTabIndex(index: Int) = _state.update {

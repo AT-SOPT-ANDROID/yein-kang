@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +7,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.dagger.hilt)
+}
+
+val properties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
 }
 
 android {
@@ -16,6 +22,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("String", "BASE_URL", properties["base.url"].toString())
     }
 
     buildTypes {
@@ -33,6 +40,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -61,6 +71,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlin.serialization.converter)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
