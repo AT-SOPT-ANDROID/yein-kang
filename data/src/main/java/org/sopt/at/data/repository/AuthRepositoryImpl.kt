@@ -2,7 +2,7 @@ package org.sopt.at.data.repository
 
 import org.sopt.at.data.datasource.AuthDataSource
 import org.sopt.at.data.dto.request.toDto
-import org.sopt.at.data.jsonToErrorMessage
+import org.sopt.at.data.service.jsonToErrorMessage
 import org.sopt.at.entity.ApiException
 import org.sopt.at.entity.SignInEntity
 import org.sopt.at.entity.SignInUserEntity
