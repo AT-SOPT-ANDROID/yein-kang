@@ -10,6 +10,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.at.data.BuildConfig
+import org.sopt.at.data.datasource.UserLocalDataSource
+import org.sopt.at.data.service.AuthInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -33,12 +35,19 @@ internal object NetworkModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
+        .addInterceptor(authInterceptor)
         .addInterceptor(loggingInterceptor)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(userLocalDataSource: UserLocalDataSource): AuthInterceptor =
+        AuthInterceptor(userLocalDataSource)
 
     @Provides
     @Singleton
