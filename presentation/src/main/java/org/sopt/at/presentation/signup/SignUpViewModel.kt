@@ -37,11 +37,11 @@ class SignUpViewModel @Inject constructor(
         )
         authRepository.signUp(signUpData).onSuccess {
             snackBar(R.string.signup_success)
-            delay(1L)
+            delay(500L)
             navigateSignIn()
         }.onFailure {
             snackBarMessage(it.message.toString())
-            delay(1L)
+            delay(500L)
             navigateId()
         }
     }

@@ -52,7 +52,7 @@ class SignInViewModel @Inject constructor(
                 userRepository.saveUser(it)
             }
             snackBar(R.string.signin_success)
-            delay(1L)
+            delay(500L)
             navigateHome()
         }.onFailure {
             snackBarMessage(it.message.toString())
