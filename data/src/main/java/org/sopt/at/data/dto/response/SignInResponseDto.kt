@@ -5,7 +5,7 @@ import org.sopt.at.entity.SignInUserEntity
 
 @Serializable
 data class SignInResponseDto(
-    val userId: Int
+    val userId: Long
 ) {
     fun toEntity() = SignInUserEntity(
         userId = userId

@@ -15,9 +15,9 @@ internal class UserLocalDataSource @Inject constructor(
         get() = userSharedPreference.getString(PASSWORD, "").toString()
         set(value) = userSharedPreference.edit { putString(PASSWORD, value) }
 
-    var userId: Int
-        get() = userSharedPreference.getInt(USER_ID, -1)
-        set(value) = userSharedPreference.edit { putInt("userId", value) }
+    var userId: Long
+        get() = userSharedPreference.getLong(USER_ID, -1)
+        set(value) = userSharedPreference.edit { putLong("userId", value) }
 
 
     fun clearUserPreference() {

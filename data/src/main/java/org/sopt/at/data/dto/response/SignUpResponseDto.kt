@@ -5,7 +5,7 @@ import org.sopt.at.entity.SignUpUserEntity
 
 @Serializable
 data class SignUpResponseDto(
-    val userId: Int,
+    val userId: Long,
     val nickname: String
 ) {
     fun toEntity() = SignUpUserEntity(

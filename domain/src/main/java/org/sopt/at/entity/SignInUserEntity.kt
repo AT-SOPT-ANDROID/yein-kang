@@ -1,5 +1,5 @@
 package org.sopt.at.entity
 
 data class SignInUserEntity(
-    val userId: Int = -1
+    val userId: Long = -1
 )
